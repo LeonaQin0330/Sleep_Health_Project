@@ -1,8 +1,0 @@
----
-title: Descriptions of the sleep project
-author: Haowen Qin
-output: github_document
----
-
-# data clean
-some texts
