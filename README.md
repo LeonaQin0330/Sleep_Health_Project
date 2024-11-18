@@ -2,6 +2,8 @@ Descriptions of the sleep project
 ================
 Haowen Qin
 
+Brief description of the contents of the report: The report will include comprehensive data cleaning steps, descriptive statistics, and predictive models to identify significant predictors of sleep disorders.
+
 `code/00_clean_data.R`
 
 - read raw data from `raw_data/` folder
