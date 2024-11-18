@@ -1,0 +1,108 @@
+---
+title: "Sleep_Project"
+author: "Haowen Qin"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+<p><span style="color: blue;"> Description: This dataset primarily investigates sleep disorders. It collects basic information from over 300 people, including gender, age, and BMI. Additionally, it gathers basic information on factors that might affect sleep health, such as sleep duration, exercise levels, and stress levels.
+
+<p><span style="color: blue;"> Analysis objectives: Perform an exploratory analysis to uncover potential associations between lifestyle factors and sleep disorders. The report will include comprehensive data cleaning steps, descriptive statistics, and predictive models to identify significant predictors of sleep disorders, offering insights into improving sleep health.
+
+```{r, include = FALSE}
+library(dplyr)
+library(tidyr)
+library(broom)
+library(ggplot2)
+library(reshape2)
+library(caret)
+library(randomForest)
+library(e1071)
+library(gbm)
+library(knitr)
+library(kableExtra)
+library(scales)
+```
+
+# DATA CLEAN
+```{r, here-i-am}
+here::i_am("Sleep_Project.Rmd")
+sleepdata <- readRDS(
+  file = here::here("output/data_clean.rds") 
+)
+```
+
+
+# DATA ANALYSIS
+## 1-Heatmap of independent variables
+```{r}
+knitr::include_graphics(
+  here::here("output/heatmap.png")
+)
+```
+
+<p><span style="color: blue;"> There is a strong positive correlation (0.77) between daily steps and physical activity level. This suggests that as the number of daily steps increases, the physical activity level also tends to increase.
+<p><span style="color: blue;"> Also, a strong negative correlation of -0.81 between stress level and sleep duration indicates that as stress levels increase, the amount of sleep a person gets tends to decrease significantly. Similarly, the correlation of -0.90 between stress level and quality of sleep represents an even stronger negative relationship. This indicates that higher stress levels are associated with poorer quality of sleep.
+<p><span style="color: blue;"> Therefore, in further analyses, focusing on Daily Steps and Stress Level will provide valuable insights into their impacts on health outcomes, particularly in relation to sleep.
+
+## 2-Pie chart for Sleep Disorder
+```{r}
+knitr::include_graphics(
+  here::here("output/piechart.png")
+)
+```
+<p><span style="color: blue;"> The pie chart displays the distribution of different sleep disorders in the dataset. This distribution shows that while most participants (58.56%) do not suffer from sleep disorders, insomnia (20.59%) and sleep apnea (20.86%) each affect roughly one-fifth of the dataset.
+
+## 3-Logistic Regression
+```{r, Univariate Logistic Regression}
+logistic_table <- readRDS(
+  file = here::here("output/logistic_table.rds") 
+)
+logistic_table
+```
+
+<p><span style="color: blue;"> The table summarizes the results of a univariate logistic regression analysis. Significant predictors of Sleep Disorder Status include Gender, Age, Stress Level, BMI Category, Systolic Pressure, Diastolic Pressure, and Heart Rate, all with p-values less than 0.001, indicating strong associations with sleep disorders. In contrast, Daily Steps shows no significant effect (p = 0.607), suggesting that the number of daily steps taken does not impact sleep disorder status in this analysis.
+
+## 3-Prediction 
+### Random Forest
+```{r, random-forest}
+rf_svm_confusion_matrix <- readRDS(
+  file = here::here("output/rf_and_svm_confusion_matrix.rds")
+)
+rf_svm_confusion_matrix$primary
+
+rf_accuracy <- readRDS(
+  file = here::here("output/rf_accuracy.rds")
+)
+rf_accuracy
+```
+
+<p><span style="color: blue;"> The model demonstrates strong performance, especially in predicting "None" (no disorder) and "Insomnia" categories. The accuracy of Random Forest Model is about 91.15%.
+
+### SVM
+```{r, SVM}
+rf_svm_confusion_matrix <- readRDS(
+  file = here::here("output/rf_and_svm_confusion_matrix.rds")
+)
+rf_svm_confusion_matrix$secondary
+
+svm_accuracy <- readRDS(
+  file = here::here("output/svm_accuracy.rds")
+)
+svm_accuracy
+```
+
+<p><span style="color: blue;"> The SVM model demonstrates good accuracy, especially in predicting the absence of sleep disorders (None) and Insomnia, with only a few misclassifications. The accuracy of Support Vector Machine (SVM) Model is about 90.27%
+
+### Model Accuracy Comparison
+```{r}
+accuracy_table <- readRDS(
+  file = here::here("output/accuracy_table.rds")
+)
+accuracy_table
+```
+
+<p><span style="color: blue;"> The model accuracy comparison table indicates that the Random Forest model achieved an accuracy of 91.15%, while the Support Vector Machine (SVM) model recorded an accuracy of 90.27%. This suggests that the Random Forest model is slightly more effective in correctly classifying instances of sleep disorders compared to the SVM model. 
+
+
+
