@@ -31,3 +31,7 @@ output/accuracy_table.rds: code/05_accuracy_comparison.R output/rf_accuracy.rds 
 .PHONY: clean
 clean:
 	rm -f output/*.rds && rm -f output/*.png && rm -f *.html
+
+.PHONY: install	
+install:
+	Rscript -e "renv::restore(prompt = FALSE)"

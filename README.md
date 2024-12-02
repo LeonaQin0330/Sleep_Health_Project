@@ -60,3 +60,4 @@ Brief description of the contents of the report: The report will include compreh
 - `make predictive_analysis` will generate the results of two predictive models (including rf_and_svm_models.rds, rf_and_svm_confusion_matrix.rds, rf_accuracy output, and svm_accuracy) to compile the report
 - `make output/accuracy_table.rds` will generate the accuracy comparison table to compile the report
 - `make clean` will remove all generated files, including `.rds`, `.png` and `.html` files
+- `make install` will synchronize the package repository, which is a shortcut to running `renv::restore()`
