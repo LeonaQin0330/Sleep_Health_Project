@@ -1,3 +1,4 @@
+# report-associated rules
 Sleep_Project.html:code/06_render_report.R \
   Sleep_Project.Rmd descriptive_analysis output/logistic_table.rds predictive_analysis output/accuracy_table.rds
 	Rscript code/06_render_report.R
@@ -35,3 +36,19 @@ clean:
 .PHONY: install	
 install:
 	Rscript -e "renv::restore(prompt = FALSE)"
+	
+# docker-associated rules
+PROJECTFILES = Sleep_Project.Rmd code/00_clean_data.R code/01_make_heatmap.R code/02_make_piechart.R code/03_logistic_regression.R code/04_predict_model.R code/05_accuracy_comparison.R code/06_render_report.R Makefile
+RENVFILES = renv.lock renv/activate.R renv/settings.json
+
+
+final_image: Dockerfile $(PROJECTFILES) $(RENVFILES)
+	docker build -t final_image .
+	touch $@
+
+report/Sleep_Project.html_mac: final_image
+	docker run -v "$$(pwd)/report":/sleephealth_project/report final_image
+	
+report/Sleep_Project.html_win: final_image
+	docker run -v /"$$(pwd)/report":/sleephealth_project/report final_image
+

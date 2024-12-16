@@ -1,63 +1,71 @@
-Descriptions of the sleep project
-================
+# Descriptions of the sleep project
+
 Haowen Qin
 
 Brief description of the contents of the report: The report will include comprehensive data cleaning steps, descriptive statistics, and predictive models to identify significant predictors of sleep disorders.
 
 `code/00_clean_data.R`
 
-- read raw data from `raw_data/` folder
-- save clean data as `.rds` in `output/` folder
+-   read raw data from `raw_data/` folder
+-   save clean data as `.rds` in `output/` folder
 
 `code/01_make_heatmap.R`
 
-- read clean data (data_clean.rds) from `output/` folder
-- save heatmap as `.png` in `output/` folder
+-   read clean data (data_clean.rds) from `output/` folder
+-   save heatmap as `.png` in `output/` folder
 
 `code/02_make_piechart.R`
 
-- read clean data (data_clean.rds) from `output/` folder
-- save piechart as `.png` in `output/` folder
+-   read clean data (data_clean.rds) from `output/` folder
+-   save piechart as `.png` in `output/` folder
 
 `code/03_logistic_regression.R`
 
-- read clean data (data_clean.rds) from `output/` folder
-- save the results of logistic regression as `.rds` in `output/` folder
+-   read clean data (data_clean.rds) from `output/` folder
+-   save the results of logistic regression as `.rds` in `output/` folder
 
 `code/04_predict_model.R`
 
-- read clean data (data_clean.rds) from `output/` folder
-- save two models as `.rds` in `output/` folder
-- save the confusion matrix of two models as `.rds` in `output/` folder
-- save the accuracy of two models as `.rds` in `output/` folder
+-   read clean data (data_clean.rds) from `output/` folder
+-   save two models as `.rds` in `output/` folder
+-   save the confusion matrix of two models as `.rds` in `output/` folder
+-   save the accuracy of two models as `.rds` in `output/` folder
 
 `code/05_accuracy_comparison.R`
 
-- read the accuracy of two models from `output/` folder
-- save the table of accuracy comparison as `.rds` in `output/` folder
+-   read the accuracy of two models from `output/` folder
+-   save the table of accuracy comparison as `.rds` in `output/` folder
 
 `code/06_render_report.R`
 
-- render `Sleep_Project.Rmd` 
-- save compiled report
+-   render `Sleep_Project.Rmd`
+-   save compiled report
 
 `Sleep_Project.Rmd`
 
-- this is the code file of final report for this project
-- read data, table, figures, and analysis results from respective locations
-- display results for production report
+-   this is the code file of final report for this project
+-   read data, table, figures, and analysis results from respective locations
+-   display results for production report
 
 `Makefile`
 
-- contains rules for building the final report
-- `make Sleep_Project.html` will render the whole report
-- `make output/data_clean.rds` will save the cleaned data in `output/` folder
-- `make output/heatmap.png` will generate a heat map figure of all independent variables to compile the report
-- `make output/piechart.png` will generate a pie chart of target variable to compile the report
-- `make descriptive_analysis` will generate the results of descriptive analysis (including data_clean.rds, heatmap.png and piechart.png) to compile the report
-- `make output/logistic_table.rds` will generate the results of the univariate logistic regression to compile the report
-- `make output/rf_and_svm_models.rds` or `make output/rf_and_svm_confusion_matrix.rds` or `make output/rf_accuracy` or `make output/svm_accuracy` will generate the results of two predictive models (Random Forest and SVM model) to compile the report
-- `make predictive_analysis` will generate the results of two predictive models (including rf_and_svm_models.rds, rf_and_svm_confusion_matrix.rds, rf_accuracy output, and svm_accuracy) to compile the report
-- `make output/accuracy_table.rds` will generate the accuracy comparison table to compile the report
-- `make clean` will remove all generated files, including `.rds`, `.png` and `.html` files
-- `make install` will synchronize the package repository, which is a shortcut to running `renv::restore()`
+-   contains rules for building the final report
+-   `make Sleep_Project.html` will render the whole report
+-   `make output/data_clean.rds` will save the cleaned data in `output/` folder
+-   `make output/heatmap.png` will generate a heat map figure of all independent variables to compile the report
+-   `make output/piechart.png` will generate a pie chart of target variable to compile the report
+-   `make descriptive_analysis` will generate the results of descriptive analysis (including data_clean.rds, heatmap.png and piechart.png) to compile the report
+-   `make output/logistic_table.rds` will generate the results of the univariate logistic regression to compile the report
+-   `make output/rf_and_svm_models.rds` or `make output/rf_and_svm_confusion_matrix.rds` or `make output/rf_accuracy` or `make output/svm_accuracy` will generate the results of two predictive models (Random Forest and SVM model) to compile the report
+-   `make predictive_analysis` will generate the results of two predictive models (including rf_and_svm_models.rds, rf_and_svm_confusion_matrix.rds, rf_accuracy output, and svm_accuracy) to compile the report
+-   `make output/accuracy_table.rds` will generate the accuracy comparison table to compile the report
+-   `make clean` will remove all generated files, including `.rds`, `.png` and `.html` files
+-   `make install` will synchronize the package repository, which is a shortcut to running `renv::restore()`
+
+`docker build`: Build the Docker image
+
+-   `make final_image` will build the docker image
+
+`docker run`: Build the report automatically in container
+
+-   `make report/Sleep_Project.html_mac` or `make report/Sleep_Project.html_win` will generate the report automatically and save to local report/ directory.
